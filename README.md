@@ -1,9 +1,11 @@
-# SWrasterizer
+# SW
 Simple software rasterizer with OpenGL-like interface.
 It's neither fast nor good, created for learning purposes.
 Inspired by this article: http://forum.devmaster.net/t/advanced-rasterization/6145
 
-![Screenshot](images/1.jpg)|![Screenshot](images/2.jpg)|![Screenshot](images/3.jpg)
+- Full Application: https://bitbucket.org/Apfel1994/swdemo
+
+![Screenshot](img1.jpg)|![Screenshot](img2.jpg)|![Screenshot](img3.jpg)
 :-------------------------:|:-------------------------:|:-------------------------:
 
 ### Drawing
