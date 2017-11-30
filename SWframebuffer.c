@@ -36,8 +36,9 @@ void swFbufDestroy(SWframebuffer *f) {
 }
 
 void swFbufClearColor_RGBA(SWframebuffer *f, SWubyte *rgba) {
-    SWint x, y, span_size = 0;
+    SWint y, span_size = 0;
     if (f->type == SW_BGRA8888) {
+        SWint x;
         for (x = 0; x < f->w; x++) {
             swPx_BGRA8888_SetColor_RGBA8888(f->w, f->h, f->pixels, x, 0, rgba);
         }

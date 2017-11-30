@@ -242,7 +242,6 @@ void swProgDrawLineStripIndexed(SWprogram *p, SWcontext *ctx, SWuint count, SWen
 
         /* transform vertices */
         (*p->v_proc)(p->vertex_attributes, index2, p->uniforms, vs_out[_2]);
-        index1 = index2;
 
         SWfloat vs_out2[2][SW_MAX_VTX_ATTRIBS];
         if (!_swClipAndTransformToNDC_Line(vs_out, vs_out2, p->v_out_size, num_corr_attrs)) continue;
@@ -368,7 +367,6 @@ void swProgDrawCurveStripIndexed(SWprogram *p, SWcontext *ctx, SWuint count, SWe
         (*p->v_proc)(p->vertex_attributes, index2, p->uniforms, vs_out[1]);
         (*p->v_proc)(p->vertex_attributes, index3, p->uniforms, vs_out[2]);
         (*p->v_proc)(p->vertex_attributes, index4, p->uniforms, vs_out[_3]);
-        index1 = index4;
 
         _swProcessCurve(p, f, vs_out, _0, 1, 2, _3, b_depth_test, b_depth_write, curve_tolerance);
     }
@@ -540,7 +538,7 @@ void swProgDrawTriangleStripIndexed(SWprogram *p, SWcontext *ctx, SWuint count, 
     const SWint num_corr_attrs = (interp_mode == 0) ? 3 : p->v_out_size;
 
     SWint i;
-    SWuint j, index1 = 0, index2 = 0, index3 = 0;
+    SWuint j, index1 = 0, index2 = 0;
 
     if (!count) return;
 
@@ -567,6 +565,8 @@ void swProgDrawTriangleStripIndexed(SWprogram *p, SWcontext *ctx, SWuint count, 
     (*p->v_proc)(p->vertex_attributes, index2, p->uniforms, vs_out[1]);
 
     for (j = 0; j < count - 2; j++) {
+        SWuint index3;
+
         is_odd = !is_odd;
 
         index3 = _swGetIndex(index_type, j + 2, indices);
