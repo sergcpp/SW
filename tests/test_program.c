@@ -13,10 +13,10 @@ void test_program() {
         swProgRegUniform(&p_, 0, SW_VEC2);
         swProgRegUniform(&p_, 1, SW_FLOAT);
         swProgRegUniform(&p_, 2, SW_VEC3);
-        assert((uintptr_t)p_.uniforms[0].data == (uintptr_t)p_.uniform_buf);
-        assert((uintptr_t)p_.uniforms[1].data == (uintptr_t)p_.uniform_buf + 2 * sizeof(SWfloat));
-        assert((uintptr_t)p_.uniforms[2].data == (uintptr_t)p_.uniform_buf + 3 * sizeof(SWfloat));
-        assert(p_.unifrom_buf_size == 6 * sizeof(SWfloat));
+        require((uintptr_t)p_.uniforms[0].data == (uintptr_t)p_.uniform_buf);
+        require((uintptr_t)p_.uniforms[1].data == (uintptr_t)p_.uniform_buf + 2 * sizeof(SWfloat));
+        require((uintptr_t)p_.uniforms[2].data == (uintptr_t)p_.uniform_buf + 3 * sizeof(SWfloat));
+        require(p_.unifrom_buf_size == 6 * sizeof(SWfloat));
 
         swProgDestroy(&p_);
     }
@@ -33,9 +33,9 @@ void test_program() {
         SWfloat uv_scale[] = { 2, 4, 1 };
         swProgSetProgramUniform(&p_, 2, SW_VEC3, uv_scale);
         SWfloat *f = (SWfloat*)p_.uniforms[2].data;
-        assert(f[0] == 2);
-        assert(f[1] == 4);
-        assert(f[2] == 1);
+        require(f[0] == 2);
+        require(f[1] == 4);
+        require(f[2] == 1);
 
         swProgDestroy(&p_);
     }

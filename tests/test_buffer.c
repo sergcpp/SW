@@ -10,9 +10,9 @@ void test_buffer() {
         SWbuffer b;
         const char data1[] = "Data we put in buffer";
         swBufInit(&b, sizeof(data1), data1);
-        assert(b.data);
+        require(b.data);
         swBufDestroy(&b);
-        assert(b.data == NULL);
+        require(b.data == NULL);
     }
 
     {
@@ -22,7 +22,7 @@ void test_buffer() {
         swBufInit(&b, sizeof(data1), data1);
         char data1_chk[sizeof(data1)];
         swBufGetData(&b, 0, sizeof(data1), data1_chk);
-        assert(strcmp(data1, data1_chk) == 0);
+        require(strcmp(data1, data1_chk) == 0);
         swBufDestroy(&b);
     }
 }

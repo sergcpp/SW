@@ -1,8 +1,17 @@
 #ifndef TEST_COMMON_H
 #define TEST_COMMON_H
 
-#undef NDEBUG
-#include <assert.h>
-#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+static void handle_assert(int passed, const char* assert, const char* file, long line) {
+    if (!passed) {
+        printf("Assertion failed %s in %s at line %d\n", assert, file, line);
+        exit(-1);
+    }
+}
+
+#define require(x) handle_assert((int)(x), #x , __FILE__, __LINE__ )
+
 
 #endif

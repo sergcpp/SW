@@ -17,7 +17,7 @@ void test_texture() {
         // Texture init move
         SWtexture t;
         swTexInitMove(&t, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, tex, NULL);
-        assert(t.pixels == tex);
+        require(t.pixels == tex);
         swTexDestroy(&t);
     }
 
@@ -27,7 +27,7 @@ void test_texture() {
         void *tex_data = malloc(sizeof(tex));
         memcpy(tex_data, tex, sizeof(tex));
         swTexInitMove_malloced(&t, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, tex_data);
-        assert(t.pixels == tex_data);
+        require(t.pixels == tex_data);
         swTexDestroy(&t);
     }
 
@@ -35,17 +35,17 @@ void test_texture() {
         // Texture swTexGetColorFloat_RGBA
         SWtexture t_;
         swTexInit(&t_, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, tex);
-        assert(t_.pixels != NULL);
-        assert(((SWubyte*)t_.pixels)[3] == 1);
+        require(t_.pixels != NULL);
+        require(((SWubyte*)t_.pixels)[3] == 1);
 
         SWfloat rgba[4];
         swTexGetColorFloat_RGBA(&t_, 0.9f, 0.0f, rgba);
-        assert(rgba[0] == 0);
-        assert(rgba[1] == 0);
-        assert(rgba[2] == 1);
-        assert(rgba[3] == 1);
+        require(rgba[0] == 0);
+        require(rgba[1] == 0);
+        require(rgba[2] == 1);
+        require(rgba[3] == 1);
 
         swTexDestroy(&t_);
-        assert(t_.pixels == NULL);
+        require(t_.pixels == NULL);
     }
 }

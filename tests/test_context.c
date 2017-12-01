@@ -8,13 +8,13 @@
 void test_context() {
     SWcontext *ctx = malloc(sizeof(SWcontext));
     swCtxInit(ctx, 100, 100);
-    assert(ctx->framebuffers[0].pixels != NULL);
+    require(ctx->framebuffers[0].pixels != NULL);
 
     {
         // Context buffer creation
         SWint buf1 = swCtxCreateBuffer(ctx);
         SWint buf2 = swCtxCreateBuffer(ctx);
-        assert(buf2 == buf1 + 1);
+        require(buf2 == buf1 + 1);
         const char data1[] = "Data we put in buffer1";
         const char data2[] = "Data for buffer2";
         swCtxBindBuffer(ctx, SW_ARRAY_BUFFER, buf1);
@@ -25,11 +25,11 @@ void test_context() {
         char data2_chk[sizeof(data2)];
         swCtxGetBufferSubData(ctx, SW_ARRAY_BUFFER, 0, sizeof(data1), data1_chk);
         swCtxGetBufferSubData(ctx, SW_INDEX_BUFFER, 0, sizeof(data2), data2_chk);
-        assert(strcmp(data1, data1_chk) == 0);
-        assert(strcmp(data2, data2_chk) == 0);
+        require(strcmp(data1, data1_chk) == 0);
+        require(strcmp(data2, data2_chk) == 0);
         swCtxDeleteBuffer(ctx, buf1);
         SWint buf3 = swCtxCreateBuffer(ctx);
-        assert(buf3 == buf1);
+        require(buf3 == buf1);
         swCtxDeleteBuffer(ctx, buf2);
         swCtxDeleteBuffer(ctx, buf3);
     }

@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/46ky3ltwvain51u6?svg=true)](https://ci.appveyor.com/project/MrApfel1994/sw)
 # SW
 Simple software rasterizer with OpenGL-like interface.
 It's neither fast nor good, created for learning purposes.

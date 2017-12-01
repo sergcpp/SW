@@ -13,12 +13,12 @@ void test_zbuffer() {
 #define TEST_BEGIN                  \
     SWzbuffer zb_;                  \
     swZbufInit(&zb_, RES_W, RES_H); \
-    assert(zb_.depth != NULL);      \
-    assert(zb_.depth[0] == 1);
+    require(zb_.depth != NULL);     \
+    require(zb_.depth[0] == 1);
 
 #define TEST_END                    \
     swZbufDestroy(&zb_);            \
-    assert(zb_.depth == NULL);
+    require(zb_.depth == NULL);
 
     {
         // Zbuffer swZbufClearDepth
@@ -26,11 +26,11 @@ void test_zbuffer() {
 
         swZbufClearDepth(&zb_, 0.5f);
         for (int i = 0; i < zb_.w * zb_.h; i++) {
-            assert(zb_.depth[i] == 0.5f);
+            require(zb_.depth[i] == 0.5f);
         }
         for (int i = 0; i < zb_.tile_w * zb_.tile_h; i++) {
-            assert(zb_.tiles[i].min == 0.5f);
-            assert(zb_.tiles[i].max == 0.5f);
+            require(zb_.tiles[i].min == 0.5f);
+            require(zb_.tiles[i].max == 0.5f);
         }
 
         TEST_END
@@ -50,9 +50,9 @@ void test_zbuffer() {
         for (int j = 0; j < RES_H; j++) {
             for (int i = 0; i < RES_W; i++) {
                 SWfloat z = (100 * 0.01f * i + j * 0.01f);
-                assert(fabs(swZbufGetDepth(&zb_, i, j) - z) < eps);
-                assert(!swZbufTestDepth(&zb_, i, j, z + 0.01f));
-                assert(swZbufTestDepth(&zb_, i, j, z - 0.01f));
+                require(fabs(swZbufGetDepth(&zb_, i, j) - z) < eps);
+                require(!swZbufTestDepth(&zb_, i, j, z + 0.01f));
+                require(swZbufTestDepth(&zb_, i, j, z - 0.01f));
             }
         }
 
@@ -77,10 +77,10 @@ void test_zbuffer() {
                 SWfloat min = i * 0.4f + j * 0.6f;
                 SWfloat max = min + 0.15f;
 
-                assert(swZbufTestTileRange(&zb_, i, j, max + 0.1f, max + 0.2f) == SW_OCCLUDED);
-                assert(swZbufTestTileRange(&zb_, i, j, min - 0.5f, min - 0.2f) == SW_NONOCCLUDED);
-                assert(swZbufTestTileRange(&zb_, i, j, min - 0.2f, min + 0.2f) == SW_PARTIAL);
-                assert(swZbufTestTileRange(&zb_, i, j, max - 0.2f, max + 0.2f) == SW_PARTIAL);
+                require(swZbufTestTileRange(&zb_, i, j, max + 0.1f, max + 0.2f) == SW_OCCLUDED);
+                require(swZbufTestTileRange(&zb_, i, j, min - 0.5f, min - 0.2f) == SW_NONOCCLUDED);
+                require(swZbufTestTileRange(&zb_, i, j, min - 0.2f, min + 0.2f) == SW_PARTIAL);
+                require(swZbufTestTileRange(&zb_, i, j, max - 0.2f, max + 0.2f) == SW_PARTIAL);
             }
         }
 
