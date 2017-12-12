@@ -69,7 +69,7 @@ void swFbufClearColorFloat(SWframebuffer *f, SWfloat r, SWfloat g, SWfloat b, SW
 }
 
 void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, void *pixels, SWfloat scale) {
-    SWint	beg_x = sw_max(x, 0),
+    SWint   beg_x = sw_max(x, 0),
             beg_y = sw_max(y, 0),
             end_x = sw_min(f->w, (SWint)(x + scale * w)),
             end_y = sw_min(f->h, (SWint)(y + scale * h));

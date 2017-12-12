@@ -111,9 +111,9 @@ extern "C" {
 #define DISCARD (*b_discard) = 1; return
 
 #define TEXTURE(slot, uv, col) swTexture(slot, uv, col)
-/*#define TESTURE_RGB888(slot, uv, col) {													\
+/*#define TESTURE_RGB888(slot, uv, col) {                                                   \
         SWtexture *t = &sw_cur_context->textures[sw_cur_context->binded_textures[slot]];\
-        swTex_RGB888_GetColorFloat_RGBA(t, uv[0], uv[1], col);							\
+        swTex_RGB888_GetColorFloat_RGBA(t, uv[0], uv[1], col);                          \
     }*/
 
 #define lerpff(f1, f2, t) ((f1) + t*((f2) - (f1)))
@@ -134,76 +134,76 @@ typedef void (FASTCALL *frag_shader_proc) (FS_IN, FS_OUT);
 #define sw_rotate_lefti(_0, _1, _2) { SWint tmp = (_0); (_0) = (_1); (_1) = (_2); (_2) = tmp; }
 #define sw_rotate_lefti4(_0, _1, _2, _3) { SWint tmp = (_0); (_0) = (_1); (_1) = (_2); (_2) = (_3); (_3) = tmp; }
 
-#define sw_cross(res, v1, v2)				\
+#define sw_cross(res, v1, v2)               \
         res[0] = v1[1]*v2[2] - v1[2]*v2[1]; \
-        res[1] = v1[2]*v2[0] - v1[0]*v2[2];	\
+        res[1] = v1[2]*v2[0] - v1[0]*v2[2]; \
         res[2] = v1[0]*v2[1] - v1[1]*v2[0];
 
-#define sw_copy(dest, src, num)				\
-	switch (num) {							\
-		case 16: (dest)[15] = (src)[15];	\
-		case 15: (dest)[14] = (src)[14];	\
-		case 14: (dest)[13] = (src)[13];	\
-		case 13: (dest)[12] = (src)[12];	\
-		case 12: (dest)[11] = (src)[11];	\
-		case 11: (dest)[10] = (src)[10];	\
-		case 10: (dest)[9] = (src)[9];		\
-		case 9: (dest)[8] = (src)[8];		\
-		case 8: (dest)[7] = (src)[7];		\
-		case 7: (dest)[6] = (src)[6];		\
-		case 6: (dest)[5] = (src)[5];		\
-		case 5: (dest)[4] = (src)[4];		\
-		case 4: (dest)[3] = (src)[3];		\
-		case 3: (dest)[2] = (src)[2];		\
-		case 2: (dest)[1] = (src)[1];		\
-		case 1: (dest)[0] = (src)[0];		\
-		default:;							\
-	}
+#define sw_copy(dest, src, num)             \
+    switch (num) {                          \
+        case 16: (dest)[15] = (src)[15];    \
+        case 15: (dest)[14] = (src)[14];    \
+        case 14: (dest)[13] = (src)[13];    \
+        case 13: (dest)[12] = (src)[12];    \
+        case 12: (dest)[11] = (src)[11];    \
+        case 11: (dest)[10] = (src)[10];    \
+        case 10: (dest)[9] = (src)[9];      \
+        case 9: (dest)[8] = (src)[8];       \
+        case 8: (dest)[7] = (src)[7];       \
+        case 7: (dest)[6] = (src)[6];       \
+        case 6: (dest)[5] = (src)[5];       \
+        case 5: (dest)[4] = (src)[4];       \
+        case 4: (dest)[3] = (src)[3];       \
+        case 3: (dest)[2] = (src)[2];       \
+        case 2: (dest)[1] = (src)[1];       \
+        case 1: (dest)[0] = (src)[0];       \
+        default:;                           \
+    }
 
-#define sw_add(dest, src, num)				\
-	switch (num) {							\
-		case 16: (dest)[15] += (src)[15];	\
-		case 15: (dest)[14] += (src)[14];	\
-		case 14: (dest)[13] += (src)[13];	\
-		case 13: (dest)[12] += (src)[12];	\
-		case 12: (dest)[11] += (src)[11];	\
-		case 11: (dest)[10] += (src)[10];	\
-		case 10: (dest)[9] += (src)[9];		\
-		case 9: (dest)[8] += (src)[8];		\
-		case 8: (dest)[7] += (src)[7];		\
-		case 7: (dest)[6] += (src)[6];		\
-		case 6: (dest)[5] += (src)[5];		\
-		case 5: (dest)[4] += (src)[4];		\
-		case 4: (dest)[3] += (src)[3];		\
-		case 3: (dest)[2] += (src)[2];		\
-		case 2: (dest)[1] += (src)[1];		\
-		case 1: (dest)[0] += (src)[0];		\
-		default:;							\
-	}
+#define sw_add(dest, src, num)              \
+    switch (num) {                          \
+        case 16: (dest)[15] += (src)[15];   \
+        case 15: (dest)[14] += (src)[14];   \
+        case 14: (dest)[13] += (src)[13];   \
+        case 13: (dest)[12] += (src)[12];   \
+        case 12: (dest)[11] += (src)[11];   \
+        case 11: (dest)[10] += (src)[10];   \
+        case 10: (dest)[9] += (src)[9];     \
+        case 9: (dest)[8] += (src)[8];      \
+        case 8: (dest)[7] += (src)[7];      \
+        case 7: (dest)[6] += (src)[6];      \
+        case 6: (dest)[5] += (src)[5];      \
+        case 5: (dest)[4] += (src)[4];      \
+        case 4: (dest)[3] += (src)[3];      \
+        case 3: (dest)[2] += (src)[2];      \
+        case 2: (dest)[1] += (src)[1];      \
+        case 1: (dest)[0] += (src)[0];      \
+        default:;                           \
+    }
 
-#define sw_add_q(dest, src, num)			\
-	switch (num) {							\
-		case 16: case 15: case 14: case 13: \
-			(dest)[12] += (src)[12];		\
-			(dest)[13] += (src)[13];		\
-			(dest)[14] += (src)[14];		\
-			(dest)[15] += (src)[15];		\
-		case 12: case 11: case 10: case 9:	\
-			(dest)[8] += (src)[8];			\
-			(dest)[9] += (src)[9];			\
-			(dest)[10] += (src)[10];		\
-			(dest)[11] += (src)[11];		\
-		case 8: case 7: case 6: case 5:		\
-			(dest)[4] += (src)[4];			\
-			(dest)[5] += (src)[5];			\
-			(dest)[6] += (src)[6];			\
-			(dest)[7] += (src)[7];			\
-		case 4: case 3: case 2: case 1: 	\
-			(dest)[3] += (src)[3];			\
-			(dest)[2] += (src)[2];			\
-			(dest)[1] += (src)[1];			\
-			(dest)[0] += (src)[0];			\
-		default:;							\
-	}
+#define sw_add_q(dest, src, num)            \
+    switch (num) {                          \
+        case 16: case 15: case 14: case 13: \
+            (dest)[12] += (src)[12];        \
+            (dest)[13] += (src)[13];        \
+            (dest)[14] += (src)[14];        \
+            (dest)[15] += (src)[15];        \
+        case 12: case 11: case 10: case 9:  \
+            (dest)[8] += (src)[8];          \
+            (dest)[9] += (src)[9];          \
+            (dest)[10] += (src)[10];        \
+            (dest)[11] += (src)[11];        \
+        case 8: case 7: case 6: case 5:     \
+            (dest)[4] += (src)[4];          \
+            (dest)[5] += (src)[5];          \
+            (dest)[6] += (src)[6];          \
+            (dest)[7] += (src)[7];          \
+        case 4: case 3: case 2: case 1:     \
+            (dest)[3] += (src)[3];          \
+            (dest)[2] += (src)[2];          \
+            (dest)[1] += (src)[1];          \
+            (dest)[0] += (src)[0];          \
+        default:;                           \
+    }
 
 #endif /* SW_TYPES_H */

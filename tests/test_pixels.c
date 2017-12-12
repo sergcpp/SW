@@ -18,22 +18,22 @@ static const SWubyte px_RGBA8888[] = { 0, 0, 0, 1,        1, 0, 0, 2,         0,
                                        10, 111, 12, 9,    190, 111, 20, 10,   0, 1, 0, 11,        0, 0, 1, 12
                                      };
 
-static const SWfloat px_FRGBA[] = { 0, 0, 0, 1,			1, 0, 0, 0,				1, 0, 0, 1,			1, 0, 0, 1,
-                                    0.5f, 0, 0, 0,		0, 0.5f, 0, 1,			0, 0, 0, 0,			1, 1, 1, 0,
-                                    0, 0.5f, 0, 0,		0, 0.5f, 0.5f, 0,		0, 0, 0, 0,			1, 1, 1, 0,
-                                    1, 1, 1, 0,			0, 0, 0, 0,				0, 0, 0, 0,			1, 0, 1, 0
+static const SWfloat px_FRGBA[] = { 0, 0, 0, 1,         1, 0, 0, 0,             1, 0, 0, 1,         1, 0, 0, 1,
+                                    0.5f, 0, 0, 0,      0, 0.5f, 0, 1,          0, 0, 0, 0,         1, 1, 1, 0,
+                                    0, 0.5f, 0, 0,      0, 0.5f, 0.5f, 0,       0, 0, 0, 0,         1, 1, 1, 0,
+                                    1, 1, 1, 0,         0, 0, 0, 0,             0, 0, 0, 0,         1, 0, 1, 0
                                   };
 
-#define REQUIRE_VEC4_EQ(vec, _0, _1, _2, _3)	\
-    require((vec)[0] == (_0));					\
-    require((vec)[1] == (_1));					\
-    require((vec)[2] == (_2));					\
+#define REQUIRE_VEC4_EQ(vec, _0, _1, _2, _3)    \
+    require((vec)[0] == (_0));                  \
+    require((vec)[1] == (_1));                  \
+    require((vec)[2] == (_2));                  \
     require((vec)[3] == (_3));
 
-#define REQUIRE_FVEC4_EQ(vec, _0, _1, _2, _3)	\
-    require(fabs((vec)[0] - (_0)) < 0.1f);		\
-    require(fabs((vec)[1] - (_1)) < 0.1f);		\
-    require(fabs((vec)[2] - (_2)) < 0.1f);		\
+#define REQUIRE_FVEC4_EQ(vec, _0, _1, _2, _3)   \
+    require(fabs((vec)[0] - (_0)) < 0.1f);      \
+    require(fabs((vec)[1] - (_1)) < 0.1f);      \
+    require(fabs((vec)[2] - (_2)) < 0.1f);      \
     require(fabs((vec)[3] - (_3)) < 0.1f);
 
 void test_pixels() {

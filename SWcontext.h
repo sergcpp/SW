@@ -9,11 +9,11 @@
 #include "SWtexture.h"
 
 /* render flags */
-#define DEPTH_TEST_ENABLED				(1 << 0)
-#define DEPTH_WRITE_ENABLED				(1 << 1)
-#define BLEND_ENABLED					(1 << 2)
-#define PERSPECTIVE_CORRECTION_ENABLED	(1 << 3)
-#define FAST_PERSPECTIVE_CORRECTION		(1 << 4)
+#define DEPTH_TEST_ENABLED              (1 << 0)
+#define DEPTH_WRITE_ENABLED             (1 << 1)
+#define BLEND_ENABLED                   (1 << 2)
+#define PERSPECTIVE_CORRECTION_ENABLED  (1 << 3)
+#define FAST_PERSPECTIVE_CORRECTION     (1 << 4)
 
 #define DEFAULT_RENDER_FLAGS (DEPTH_TEST_ENABLED | DEPTH_WRITE_ENABLED | PERSPECTIVE_CORRECTION_ENABLED)
 

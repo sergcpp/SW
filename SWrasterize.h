@@ -4,9 +4,9 @@
 #include "SWframebuffer.h"
 #include "SWprogram.h"
 
-#define _swProjectOnScreen(f, p, out)						    \
-	out[0] = (SWint)((f)->w * ((p)[0] + 1) / 2 + (SWfloat)0.5);	\
-	out[1] = (SWint)((f)->h * (-(p)[1] + 1) / 2 + (SWfloat)0.5);
+#define _swProjectOnScreen(f, p, out)                           \
+    out[0] = (SWint)((f)->w * ((p)[0] + 1) / 2 + (SWfloat)0.5); \
+    out[1] = (SWint)((f)->h * (-(p)[1] + 1) / 2 + (SWfloat)0.5);
 
 sw_inline void _swBlendPixels(SWframebuffer *f, SWint ix, SWint iy, SWfloat f_out[4]) {
     SWfloat f_in[4];
@@ -78,8 +78,8 @@ sw_inline void _swProcessLine(SWprogram *p, SWframebuffer *f,
     }
 
     for (x = p0[0]; x <= p1[0]; x++) {
-        if ((x < 0 || x >= w || y < 0 || y >= h) ||				        /* test against viewport bounds */
-                (fs_in1[2] < 0 || fs_in1[2] > 1)) {							/* test against depth bounds */
+        if ((x < 0 || x >= w || y < 0 || y >= h) ||                     /* test against viewport bounds */
+                (fs_in1[2] < 0 || fs_in1[2] > 1)) {                         /* test against depth bounds */
             /* skip fragment */
         } else {
             if (!steep) {
@@ -660,7 +660,7 @@ sw_inline void _swProcessTriangle_fast(SWprogram *p, SWframebuffer *f, SWfloat v
 
             SWfloat step_x[SW_MAX_VTX_ATTRIBS] = { 0 };
             //SWfloat step_y_left[SW_MAX_VTX_ATTRIBS],
-            //		step_y_right[SW_MAX_VTX_ATTRIBS];
+            //      step_y_right[SW_MAX_VTX_ATTRIBS];
             SWfloat *step_y_left = f01,
                      *step_y_right = f11;
 

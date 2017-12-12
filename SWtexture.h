@@ -23,17 +23,17 @@ void swTexDestroy(SWtexture *t);
 
 #define swTexGetColorFloat_RGBA(t, u, v, rgba) {        \
     SWint x = (SWint)(u * (t)->w) & ((t)->w - 1);       \
-	SWint y = (SWint)(v * (t)->h) & ((t)->h - 1);       \
+    SWint y = (SWint)(v * (t)->h) & ((t)->h - 1);       \
                                                         \
-	switch ((t)->type) {                                \
+    switch ((t)->type) {                                \
         case SW_UNSIGNED_BYTE:{                         \
             SWint i;                                    \
-			SWubyte *p = (SWubyte*)(t)->pixels;         \
-			if ((t)->mode == SW_RGB) {                  \
-				p += 3 * (y * (t)->w + x);              \
+            SWubyte *p = (SWubyte*)(t)->pixels;         \
+            if ((t)->mode == SW_RGB) {                  \
+                p += 3 * (y * (t)->w + x);              \
                 rgba[3] = (SWfloat)1.0;                 \
-			} else if ((t)->mode == SW_RGBA) {          \
-				p += 4 * (y * (t)->w + x);              \
+            } else if ((t)->mode == SW_RGBA) {          \
+                p += 4 * (y * (t)->w + x);              \
                 rgba[3] = _sw_ubyte_to_float_table[p[3]];\
             }                                           \
                                                         \

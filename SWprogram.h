@@ -3,8 +3,8 @@
 
 #include "SWcore.h"
 
-#define SW_MAX_VTX_ATTRIBS 		16
-#define SW_MAX_UNIFORMS 		32
+#define SW_MAX_VTX_ATTRIBS      16
+#define SW_MAX_UNIFORMS         32
 
 typedef struct SWprogram {
     vtx_shader_proc v_proc;
