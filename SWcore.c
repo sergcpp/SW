@@ -79,7 +79,7 @@ const void *swGetDepthDataRef(SWint i) {
     return swCtxGetDepthDataRef(sw_cur_context, i);
 }
 
-void swBlitPixels(SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, void *pixels, SWfloat scale) {
+void swBlitPixels(SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale) {
     swCtxBlitPixels(sw_cur_context, x, y, type, mode, w, h, pixels, scale);
 }
 

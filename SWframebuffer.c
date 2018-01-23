@@ -68,7 +68,7 @@ void swFbufClearColorFloat(SWframebuffer *f, SWfloat r, SWfloat g, SWfloat b, SW
     }
 }
 
-void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, void *pixels, SWfloat scale) {
+void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale) {
     SWint   beg_x = sw_max(x, 0),
             beg_y = sw_max(y, 0),
             end_x = sw_min(f->w, (SWint)(x + scale * w)),
@@ -121,6 +121,6 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
 #undef LOOP
 }
 
-void swFbufBlitTexture(SWframebuffer *f, SWint x, SWint y, SWtexture *t, SWfloat scale) {
+void swFbufBlitTexture(SWframebuffer *f, SWint x, SWint y, const SWtexture *t, SWfloat scale) {
     swFbufBlitPixels(f, x, y, t->type, t->mode, t->w, t->h, t->pixels, scale);
 }

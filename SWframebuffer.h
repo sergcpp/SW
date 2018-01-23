@@ -60,8 +60,8 @@ void swFbufClearColorFloat(SWframebuffer *f, SWfloat r, SWfloat g, SWfloat b, SW
 #define swFbufBGRA8888_SetPixel_FRGBA(f, x, y, col) \
     swPx_BGRA8888_SetColor_FRGBA((f)->w, (f)->h, (f)->pixels, (x), (y), (col))
 
-void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, void *pixels, SWfloat scale);
-void swFbufBlitTexture(SWframebuffer *f, SWint x, SWint y, struct SWtexture *t, SWfloat scale);
+void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale);
+void swFbufBlitTexture(SWframebuffer *f, SWint x, SWint y, const struct SWtexture *t, SWfloat scale);
 
 /*static sw_inline SWint swFbufTestDepth(SWframebuffer *f, SWint x, SWint y, SWfloat z) {
     return !(z > f->depth[y * f->w + x]);
