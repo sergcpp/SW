@@ -13,6 +13,8 @@ set(SOURCE_FILES    SW.h
                     SWcore.c
                     SWcontext.h
                     SWcontext.c
+                    SWculling.h
+                    SWculling.c
                     SWprogram.h
                     SWprogram.c
                     SWrasterize.h

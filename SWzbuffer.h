@@ -12,6 +12,7 @@ typedef struct SWzbuffer {
     SWfloat *depth;
     SWint tile_w, tile_h;
     SWzrange *tiles;
+    SWfloat zmax;
 } SWzbuffer;
 
 typedef enum SWoccresult {
@@ -20,7 +21,7 @@ typedef enum SWoccresult {
     SW_PARTIAL
 } SWoccresult;
 
-void swZbufInit(SWzbuffer *zb, SWint w, SWint h);
+void swZbufInit(SWzbuffer *zb, SWint w, SWint h, SWfloat zmax);
 void swZbufDestroy(SWzbuffer *zb);
 
 void swZbufClearDepth(SWzbuffer *zb, SWfloat val);
@@ -43,7 +44,7 @@ void swZbufClearDepth(SWzbuffer *zb, SWfloat val);
         zr->max = sw_max((zmax), zr->max);                                      \
     }
 
-sw_inline SWoccresult swZbufTestTileRange(SWzbuffer *zb, SWint x, SWint y, SWfloat min, SWfloat max) {
+sw_inline SWoccresult swZbufTestTileRange(const SWzbuffer *zb, SWint x, SWint y, SWfloat min, SWfloat max) {
     SWzrange *zr = &zb->tiles[(y / SW_TILE_SIZE) * zb->tile_w + (x / SW_TILE_SIZE)];
     if (max < zr->min) {
         return SW_NONOCCLUDED;
@@ -52,6 +53,10 @@ sw_inline SWoccresult swZbufTestTileRange(SWzbuffer *zb, SWint x, SWint y, SWflo
     } else {
         return SW_PARTIAL;
     }
+}
+
+sw_inline SWzrange *swZbufGetTileRange(const SWzbuffer *zb, SWint x, SWint y) {
+    return &zb->tiles[(y / SW_TILE_SIZE) * zb->tile_w + (x / SW_TILE_SIZE)];
 }
 
 void swZbufSetDepth_(SWzbuffer *zb, SWint x, SWint y, SWfloat val);

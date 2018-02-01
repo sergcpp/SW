@@ -8,6 +8,8 @@ extern "C" {
 #include "SWcontext.h"
 #include "SWdraw.h"
 
+#include "SWculling.h"
+
 #ifdef __cplusplus
 }
 #endif

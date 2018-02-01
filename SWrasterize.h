@@ -853,20 +853,21 @@ sw_inline SWint _swClipAndTransformToNDC_Line(SWfloat vs_in[2][SW_MAX_VTX_ATTRIB
 }
 
 sw_inline SWint _swClipAndTransformToNDC_Tri(SWfloat vs_in[][SW_MAX_VTX_ATTRIBS], SWfloat vs_out[16][SW_MAX_VTX_ATTRIBS], SWint _0, SWint _1, SWint _2, SWint out_verts[16], SWint num_attrs, SWint num_corr_attrs) {
-    SWfloat clip_planes[6][4] = { { -1, 0, 0, 1 },
+    const SWfloat clip_planes[6][4] = {
+        { -1, 0, 0, 1 },
         { 1, 0, 0, 1 },
         { 0, -1, 0, 1 },
         { 0, 1, 0, 1 },
         { 0, 0, -1, 1 },
         { 0, 0, 0, 1 }
     };
-    SWint clip_plane_bits[6] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
+    const SWint clip_plane_bits[6] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
     SWint clip_mask = 0, num_verts = 3;
     SWint i, j;
 
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 6; j++) {
-            if (PLANE_DOT(vs_in[i], clip_planes[j]) < -0.01) clip_mask |= clip_plane_bits[j];
+            if (PLANE_DOT(vs_in[i], clip_planes[j]) < -0.01f) clip_mask |= clip_plane_bits[j];
         }
     }
 
@@ -944,6 +945,102 @@ sw_inline SWint _swClipAndTransformToNDC_Tri(SWfloat vs_in[][SW_MAX_VTX_ATTRIBS]
             vs_out[ndx][ii] *= inv_posw;
         }
         vs_out[ndx][3] = inv_posw;
+    }
+
+    return n;
+
+#undef EMIT_VERTEX
+}
+
+sw_inline SWint _swClipAndTransformToNDC_Tri_Simple(SWfloat vs_in[][4], SWfloat vs_out[16][4], SWint _0, SWint _1, SWint _2, SWfloat zmax, SWint out_verts[16]) {
+    const SWfloat clip_planes[6][4] = {
+        { -1, 0, 0, 1 },
+        { 1, 0, 0, 1 },
+        { 0, -1, 0, 1 },
+        { 0, 1, 0, 1 },
+        { 0, 0, -1, zmax },
+        { 0, 0, 1, 1 }
+    };
+    const SWint clip_plane_bits[6] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
+    SWint clip_mask = 0, num_verts = 3;
+    SWint i, j;
+
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 6; j++) {
+            if (PLANE_DOT(vs_in[i], clip_planes[j]) < -0.01f) clip_mask |= clip_plane_bits[j];
+        }
+    }
+
+    if (vs_in != vs_out) {
+        for (i = 0; i < 3; i++) {
+            vs_out[i][0] = vs_in[i][0];
+            vs_out[i][1] = vs_in[i][1];
+            vs_out[i][2] = vs_in[i][2];
+            vs_out[i][3] = vs_in[i][3];
+        }
+    }
+
+    SWint list1[16] = { _0, _1, _2 };
+    SWint *in_list = list1, *out_list = out_verts;
+    SWint n = num_verts;
+
+#define EMIT_VERTEX(ndx1, ndx2, t)  \
+    vs_out[num_verts][0] = LERP(vs_out[ndx1][0], vs_out[ndx2][0], t);   \
+    vs_out[num_verts][1] = LERP(vs_out[ndx1][1], vs_out[ndx2][1], t);   \
+    vs_out[num_verts][2] = LERP(vs_out[ndx1][2], vs_out[ndx2][2], t);   \
+    vs_out[num_verts][3] = LERP(vs_out[ndx1][3], vs_out[ndx2][3], t);   \
+    num_verts++;
+
+    for (i = 0; i < 6; i++) {
+        if (clip_mask & clip_plane_bits[i]) {
+            SWint out_count = 0;
+            SWint ndx_prev = in_list[0];
+            SWfloat dp_prev = PLANE_DOT(vs_out[ndx_prev], clip_planes[i]);
+
+            in_list[n] = in_list[0];
+            for (j = 1; j <= n; j++) {
+                SWint ndx = in_list[j];
+                SWfloat dp = PLANE_DOT(vs_out[ndx], clip_planes[i]);
+                if (dp_prev >= 0) {
+                    out_list[out_count++] = ndx_prev;
+                }
+
+                if (DIFFERENT_SIGNS(dp, dp_prev)) {
+                    if (dp < 0) {
+                        SWfloat t = dp / (dp - dp_prev);
+                        EMIT_VERTEX(ndx_prev, ndx, t);
+                    } else {
+                        SWfloat t = dp_prev / (dp_prev - dp);
+                        EMIT_VERTEX(ndx, ndx_prev, t);
+                    }
+                    out_list[out_count++] = num_verts - 1;
+                }
+
+                ndx_prev = ndx;
+                dp_prev = dp;
+            }
+
+            if (out_count < 3) {
+                return 0;
+            }
+
+            sw_swap(in_list, out_list, SWint *);
+            n = out_count;
+        }
+    }
+
+    if (in_list != out_verts) {
+        for (i = 0; i < n; i++) {
+            out_verts[i] = in_list[i];
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        SWint ndx = in_list[i];
+        vs_out[ndx][3] = 1 / vs_out[ndx][3];
+        vs_out[ndx][0] *= vs_out[ndx][3];
+        vs_out[ndx][1] *= vs_out[ndx][3];
+        vs_out[ndx][2] *= vs_out[ndx][3];
     }
 
     return n;

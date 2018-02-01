@@ -5,7 +5,7 @@
 
 #define _swGetTile(zb, x, y) &zb->tiles[(y & ~(SW_TILE_SIZE - 1) * zb->tile_w) + (x & ~(SW_TILE_SIZE - 1))]
 
-void swZbufInit(SWzbuffer *zb, SWint w, SWint h) {
+void swZbufInit(SWzbuffer *zb, SWint w, SWint h, SWfloat zmax) {
     memset(zb, 0, sizeof(SWzbuffer));
     zb->w = w;
     zb->h = h;
@@ -13,6 +13,7 @@ void swZbufInit(SWzbuffer *zb, SWint w, SWint h) {
     zb->tile_h = (h + (SW_TILE_SIZE - 1)) / SW_TILE_SIZE;
     zb->depth = (SWfloat*)malloc(sizeof(SWfloat) * w * h);
     zb->tiles = (SWzrange*)malloc(sizeof(SWzrange) * zb->tile_w * zb->tile_h);
+    zb->zmax = zmax;
     swZbufClearDepth(zb, 1);
 }
 

@@ -181,6 +181,11 @@ typedef void (FASTCALL *frag_shader_proc) (FS_IN, FS_OUT);
         default:;                           \
     }
 
+#define sw_add_3(dest, src)         \
+        (dest)[0] += (src)[0];      \
+        (dest)[1] += (src)[1];      \
+        (dest)[2] += (src)[2];
+
 #define sw_add_q(dest, src, num)            \
     switch (num) {                          \
         case 16: case 15: case 14: case 13: \

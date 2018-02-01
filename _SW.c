@@ -10,3 +10,5 @@
 #include "SWrasterize.c"
 #include "SWtexture.c"
 #include "SWzbuffer.c"
+
+#include "SWculling.c"

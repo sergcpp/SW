@@ -21,7 +21,7 @@ void swFbufInit(SWframebuffer *f, SWenum type, SWint w, SWint h, SWint with_dept
     f->pixels = calloc(num_bytes, 1);
     if (with_depth) {
         f->zbuf = (SWzbuffer*)malloc(sizeof(SWzbuffer));
-        swZbufInit(f->zbuf, w, h);
+        swZbufInit(f->zbuf, w, h, 1.0f);
         swFbufClearDepth(f, (SWfloat)1);
     }
 }
