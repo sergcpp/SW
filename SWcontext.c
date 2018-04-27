@@ -207,6 +207,7 @@ void swCtxBindTexture(SWcontext *ctx, SWint tex) {
 
 void swCtxTexImage2D(SWcontext *ctx, SWenum mode, SWenum type, SWint w, SWint h, const void *pixels) {
     SWtexture *t = &ctx->textures[ctx->binded_textures[ctx->active_tex_slot]];
+    swTexDestroy(t);
     swTexInit(t, mode, type, w, h, pixels);
 }
 

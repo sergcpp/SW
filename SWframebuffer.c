@@ -77,9 +77,11 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
     SWfloat u_step = (SWfloat)1.0 / (w * scale),
             v_step = (SWfloat)1.0 / (h * scale);
 
-    SWfloat v = 0;
     SWint i, j;
 
+    if (type == SW_UNSIGNED_BYTE) {
+		SWfloat v = 0;
+		
 #define LOOP(__fun__) \
     for (j = beg_y; j < end_y; j++) {                                   \
         SWfloat u = 0;                                                  \
@@ -91,7 +93,7 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
         v += v_step;                                                    \
     }
 
-    if (type == SW_UNSIGNED_BYTE) {
+		
         if (mode == SW_RGB) {
             if (f->type == SW_BGRA8888) {
                 LOOP(swPx_RGB888_GetColor_BGRA8888_UV)
@@ -101,6 +103,8 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
                 LOOP(swPx_RGBA8888_GetColor_BGRA8888_UV)
             }
         }
+		
+#undef LOOP
     } else if (type == SW_FLOAT) {
         assert(scale == 1.0f);
         const SWfloat *fp = (SWfloat *)pixels;
@@ -117,8 +121,6 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
     } else if (type == SW_COMPRESSED) {
         assert(0);
     }
-
-#undef LOOP
 }
 
 void swFbufBlitTexture(SWframebuffer *f, SWint x, SWint y, const SWtexture *t, SWfloat scale) {
