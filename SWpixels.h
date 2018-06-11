@@ -107,8 +107,14 @@
 #define swPx_RGB888_GetColor_BGRA8888_UV(w, h, pixels, u, v, bgra) \
     _swPx_RGB888_GetColor_BGRA8888((SWubyte*)(pixels) + 3 * (((SWint)((v) * (h)) & ((h) - 1)) * (w) + ((SWint)((u) * (w)) & ((w) - 1))), (bgra))
 
+#define swPx_RGB888_GetColor_BGRA8888_UV_norepeat_unsafe(w, h, pixels, u, v, bgra) \
+    _swPx_RGB888_GetColor_BGRA8888((SWubyte*)(pixels) + 3 * ((SWint)((v) * (h)) * (w) + (SWint)((u) * (w))), (bgra))
+
 #define swPx_RGBA8888_GetColor_BGRA8888_UV(w, h, pixels, u, v, bgra) \
     _swPx_RGBA8888_GetColor_BGRA8888((SWubyte*)(pixels) + 4 * (((SWint)((v) * (h)) & ((h) - 1)) * (w) + ((SWint)((u) * (w)) & ((w) - 1))), (bgra))
+
+#define swPx_RGBA8888_GetColor_BGRA8888_UV_norepeat_unsafe(w, h, pixels, u, v, bgra) \
+    _swPx_RGBA8888_GetColor_BGRA8888((SWubyte*)(pixels) + 4 * ((SWint)((v) * (h)) * (w) + (SWint)((u) * (w))), (bgra))
 
 #define swPx_RGB888_GetColor_FBGRA_UV(w, h, pixels, u, v, rgba) \
     _swPx_RGB888_GetColor_FBGRA((SWubyte*)(pixels) + 3 * (((SWint)((v) * (h)) & ((h) - 1)) * (w) + ((SWint)((u) * (w)) & ((w) - 1))), (rgba))

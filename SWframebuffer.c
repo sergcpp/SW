@@ -93,14 +93,13 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
         v += v_step;                                                    \
     }
 
-		
         if (mode == SW_RGB) {
             if (f->type == SW_BGRA8888) {
-                LOOP(swPx_RGB888_GetColor_BGRA8888_UV)
+                LOOP(swPx_RGB888_GetColor_BGRA8888_UV_norepeat_unsafe)
             }
         } else if (mode == SW_RGBA) {
             if (f->type == SW_BGRA8888) {
-                LOOP(swPx_RGBA8888_GetColor_BGRA8888_UV)
+                LOOP(swPx_RGBA8888_GetColor_BGRA8888_UV_norepeat_unsafe)
             }
         }
 		
