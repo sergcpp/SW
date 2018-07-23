@@ -12,7 +12,7 @@ void test_zbuffer() {
 
 #define TEST_BEGIN                  \
     SWzbuffer zb_;                  \
-    swZbufInit(&zb_, RES_W, RES_H); \
+    swZbufInit(&zb_, RES_W, RES_H, 1.0f); \
     require(zb_.depth != NULL);     \
     require(zb_.depth[0] == 1);
 

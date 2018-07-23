@@ -78,7 +78,7 @@ void test_framebuffer() {
         TEST_BEGIN;
 
         swFbufClearColorFloat(&f, 1, 0.0f, 0.0f, 1);
-        swFbufBlitPixels(&f, 1, 10, SW_UNSIGNED_BYTE, SW_RGB, 4, 4, tex, 1);
+        swFbufBlitPixels(&f, 1, 10, 0, SW_UNSIGNED_BYTE, SW_RGB, 4, 4, tex, 1);
 
         require(((SWubyte*)f.pixels)[4 * (11 * f.w + 2) + 0] == 14);
         require(((SWubyte*)f.pixels)[4 * (11 * f.w + 2) + 1] == 13);
