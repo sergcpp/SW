@@ -68,11 +68,13 @@ void swFbufClearColorFloat(SWframebuffer *f, SWfloat r, SWfloat g, SWfloat b, SW
     }
 }
 
-void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale) {
+void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWint pitch, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale) {
     SWint   beg_x = sw_max(x, 0),
             beg_y = sw_max(y, 0),
             end_x = sw_min(f->w, (SWint)(x + scale * w)),
             end_y = sw_min(f->h, (SWint)(y + scale * h));
+
+    if (!pitch) pitch = w;
 
     SWfloat u_step = (SWfloat)1.0 / (w * scale),
             v_step = (SWfloat)1.0 / (h * scale);
@@ -111,9 +113,9 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
             if (f->type == SW_BGRA8888) {
                 for (j = beg_y; j < end_y; j++) {
                     for (i = beg_x; i < end_x; i++) {
-                        swPx_BGRA8888_SetColor_FRGBA(f->w, f->h, (f->pixels), i, j, fp);
-                        fp += 4;
+                        swPx_BGRA8888_SetColor_FRGBA(f->w, f->h, (f->pixels), i, j, &fp[i * 4]);
                     }
+                    fp += pitch * 4;
                 }
             }
         }
@@ -123,5 +125,5 @@ void swFbufBlitPixels(SWframebuffer *f, SWint x, SWint y, SWenum type, SWenum mo
 }
 
 void swFbufBlitTexture(SWframebuffer *f, SWint x, SWint y, const SWtexture *t, SWfloat scale) {
-    swFbufBlitPixels(f, x, y, t->type, t->mode, t->w, t->h, t->pixels, scale);
+    swFbufBlitPixels(f, x, y, 0, t->type, t->mode, t->w, t->h, t->pixels, scale);
 }

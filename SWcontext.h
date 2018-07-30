@@ -59,7 +59,7 @@ SWint swCtxGetCurFramebuffer(SWcontext *ctx);
 const void *swCtxGetPixelDataRef(SWcontext *ctx, SWint i);
 const void *swCtxGetDepthDataRef(SWcontext *ctx, SWint i);
 
-void swCtxBlitPixels(SWcontext *ctx, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale);
+void swCtxBlitPixels(SWcontext *ctx, SWint x, SWint y, SWint pitch, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale);
 void swCtxBlitTexture(SWcontext *ctx, SWint x, SWint y, SWfloat scale);
 
 /* Texture operations */

@@ -154,9 +154,9 @@ const void *swCtxGetDepthDataRef(SWcontext *ctx, SWint i) {
     return f->zbuf->depth;
 }
 
-void swCtxBlitPixels(SWcontext *ctx, SWint x, SWint y, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale) {
+void swCtxBlitPixels(SWcontext *ctx, SWint x, SWint y, SWint pitch, SWenum type, SWenum mode, SWint w, SWint h, const void *pixels, SWfloat scale) {
     SWframebuffer *f = &ctx->framebuffers[ctx->cur_framebuffer];
-    swFbufBlitPixels(f, x, y, type, mode, w, h, pixels, scale);
+    swFbufBlitPixels(f, x, y, pitch, type, mode, w, h, pixels, scale);
 }
 
 void swCtxBlitTexture(SWcontext *ctx, SWint x, SWint y, SWfloat scale) {
