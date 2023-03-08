@@ -60,8 +60,13 @@ if(MSVC)
     endif()
     set_source_files_properties(_SW_AVX2.c PROPERTIES COMPILE_FLAGS "/arch:AVX /O2 /Ob2")
     set_source_files_properties(_SW_AVX512.c PROPERTIES COMPILE_FLAGS "/arch:AVX512 /O2 /Ob2")
+else(MSVC)
+    set_source_files_properties(_SW_SSE2.c PROPERTIES COMPILE_FLAGS -msse2)
+    set_source_files_properties(_SW_AVX2.c PROPERTIES COMPILE_FLAGS "-mavx2 -mfma")
+    set_source_files_properties(_SW_AVX512.c PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512bw -mavx512dq")
 endif(MSVC)
 
 add_library(SW STATIC ${ALL_SOURCE_FILES})
+set_target_properties(SW PROPERTIES UNITY_BUILD OFF)
 
 add_subdirectory(tests)
