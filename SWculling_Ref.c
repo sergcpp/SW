@@ -353,7 +353,7 @@ SWint _swRasterizeTriangle_Ref(SWcull_ctx *ctx, SWint tile_row_ndx,
     tri_event[1] = event_start[1];
     tri_event[2] = event_start[2];
 
-    SWint start_delta, end_delta, top_delta, start_event = 0, end_event = 0, top_event;
+    SWint start_delta = 0, end_delta = 0, top_delta = 0, start_event = 0, end_event = 0, top_event = 0;
     if (use_tight_traversal) {
         start_delta = slope_tile_delta[2] + LEFT_EDGE_BIAS;
         end_delta = slope_tile_delta[0] + RIGHT_EDGE_BIAS;

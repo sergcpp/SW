@@ -284,3 +284,6 @@ void test_pixels() {
         REQUIRE_VEC4_EQ(&bgra_buf[4 * (4 * 3 + 3)], 255, 0, 255, 0);
     }
 }
+
+#undef REQUIRE_VEC4_EQ
+#undef REQUIRE_FVEC4_EQ

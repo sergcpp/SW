@@ -10,14 +10,14 @@ SWint _swCullCtxTestRect_Ref(const SWcull_ctx *ctx, const SWfloat p_min[2], cons
 void _swCullCtxClearBuf_Ref(SWcull_ctx *ctx);
 void _swCullCtxDebugDepth_Ref(const SWcull_ctx *ctx, SWfloat *out_depth);
 
-#ifdef __aarch64__
+#if defined(__aarch64__) || defined(_M_ARM) || defined(_M_ARM64)
 SWint _swProcessTrianglesIndexed_NEON(SWcull_ctx *ctx, const void *attribs, const SWuint *indices, SWuint stride,
                                       SWuint index_count, const SWfloat *xform, SWint is_occluder);
 SWint _swCullCtxTestRect_NEON(const SWcull_ctx *ctx, const SWfloat p_min[2], const SWfloat p_max[3],
                               const SWfloat w_min);
 void _swCullCtxClearBuf_NEON(SWcull_ctx *ctx);
 void _swCullCtxDebugDepth_NEON(const SWcull_ctx *ctx, SWfloat *out_depth);
-#else // __aarch64__
+#else // defined(__aarch64__) || defined(_M_ARM) || defined(_M_ARM64)
 SWint _swProcessTrianglesIndexed_SSE2(SWcull_ctx *ctx, const void *attribs, const SWuint *indices, SWuint stride,
                                       SWuint index_count, const SWfloat *xform, SWint is_occluder);
 SWint _swProcessTrianglesIndexed_AVX2(SWcull_ctx *ctx, const void *attribs, const SWuint *indices, SWuint stride,
@@ -42,7 +42,7 @@ SWint _swCullCtxTestRect_AVX512(const SWcull_ctx *ctx, const SWfloat p_min[2], c
 void _swCullCtxClearBuf_AVX512(SWcull_ctx *ctx);
 void _swCullCtxDebugDepth_AVX512(const SWcull_ctx *ctx, SWfloat *out_depth);
 #endif
-#endif // __aarch64__
+#endif // defined(__aarch64__) || defined(_M_ARM) || defined(_M_ARM64)
 
 void swCullCtxInit(SWcull_ctx *ctx, const SWint w, const SWint h, SWfloat near_clip) {
     swCPUInfoInit(&ctx->cpu_info);
@@ -70,7 +70,7 @@ void swCullCtxResize(SWcull_ctx *ctx, const SWint w, const SWint h, SWfloat near
     ctx->half_w = (SWfloat)w / 2;
     ctx->half_h = (SWfloat)h / 2;
 
-#if defined(__aarch64__)
+#if defined(__aarch64__) || defined(_M_ARM) || defined(_M_ARM64)
     ctx->tile_size_y = 4;
     ctx->subtile_size_y = 4;
     ctx->tri_indexed_proc = (SWCullTrianglesIndexedProcType)&_swProcessTrianglesIndexed_NEON;

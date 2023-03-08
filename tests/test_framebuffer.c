@@ -98,3 +98,5 @@ void test_framebuffer() {
         TEST_END;
     }
 }
+#undef TEST_BEGIN
+#undef TEST_END

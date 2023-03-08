@@ -33,7 +33,7 @@ inline unsigned long long _xgetbv(unsigned int index) {
 //  GCC Intrinsics
 #include <cpuid.h>
 #include <immintrin.h>
-inline void cpuid(int info[4], int InfoType) {
+static inline void cpuid(int info[4], int InfoType) {
     __cpuid_count(InfoType, 0, info[0], info[1], info[2], info[3]);
 }
 #if defined(__GNUC__) && (__GNUC__ < 9) && !defined(__APPLE__)
@@ -86,10 +86,10 @@ void swCPUInfoInit(SWcpu_info *info) {
     unsigned nExIds, i = 0;
     char CPUBrandString[0x40];
     // Get the information associated with each extended ID.
-    __cpuid(CPUInfo, 0x80000000);
+    cpuid(CPUInfo, 0x80000000);
     nExIds = CPUInfo[0];
     for (i = 0x80000000; i <= nExIds; ++i) {
-        __cpuid(CPUInfo, i);
+        cpuid(CPUInfo, i);
         // Interpret CPU brand string
         if (i == 0x80000002)
             memcpy(CPUBrandString, CPUInfo, sizeof(CPUInfo));
@@ -113,7 +113,7 @@ void swCPUInfoInit(SWcpu_info *info) {
     info->physical_memory = ((statex.ullTotalPhys / 1024.0f) / 1024) / 1024;
 
     char vendor[13];
-    __cpuid(CPUInfo, 0);
+    cpuid(CPUInfo, 0);
     memcpy(vendor, &CPUInfo[1], 4);   // copy EBX
     memcpy(vendor + 4, &CPUInfo[2], 4); // copy ECX
     memcpy(vendor + 8, &CPUInfo[3], 4); // copy EDX
@@ -211,14 +211,6 @@ void swCPUInfoInit(SWcpu_info *info) {
     info->sse2_supported = true;
 #endif
 }
-
-#if !defined(_WIN32) && !defined(__linux) || defined(__ANDROID__)
-
-void swCInfoInit(SWcpu_info *info) {
-    memset(info, 0, sizeof(SWcpu_info));
-}
-
-#endif
 
 void swCPUInfoDestroy(SWcpu_info *info) {
     free(info->vendor);

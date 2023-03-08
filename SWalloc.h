@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdint.h>
 
-inline void* sw_aligned_malloc(size_t size, size_t alignment) {
+static inline void* sw_aligned_malloc(size_t size, size_t alignment) {
     assert(alignment > sizeof(void *));
     size_t space = size + (alignment - 1);
 
@@ -29,7 +29,7 @@ inline void* sw_aligned_malloc(size_t size, size_t alignment) {
     return ptr;
 }
 
-inline void sw_aligned_free(void* p) {
+static inline void sw_aligned_free(void* p) {
     if (p) {
         free(((void **)p)[-1]);
     }
