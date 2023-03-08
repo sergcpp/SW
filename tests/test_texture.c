@@ -5,7 +5,7 @@
 
 #include "../SWtexture.h"
 
-static SWubyte tex[] = { 0, 0, 0,        1, 0, 0,        0, 1, 0,        0, 0, 255,
+static SWubyte test_texture_tex[] = { 0, 0, 0,        1, 0, 0,        0, 1, 0,        0, 0, 255,
                          1, 1, 0,        11, 13, 14,     190, 111, 20,   20, 20, 20,
                          10, 111, 12,    190, 111, 20,   0, 1, 0,        0, 0, 1,
                          1, 0, 0,        0, 1, 0,        0, 0, 1,        0, 0, 0
@@ -16,16 +16,16 @@ void test_texture() {
     {
         // Texture init move
         SWtexture t;
-        swTexInitMove(&t, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, tex, NULL);
-        require(t.pixels == tex);
+        swTexInitMove(&t, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, test_texture_tex, NULL);
+        require(t.pixels == test_texture_tex);
         swTexDestroy(&t);
     }
 
     {
         // Texture init malloced
         SWtexture t;
-        void *tex_data = malloc(sizeof(tex));
-        memcpy(tex_data, tex, sizeof(tex));
+        void *tex_data = malloc(sizeof(test_texture_tex));
+        memcpy(tex_data, test_texture_tex, sizeof(test_texture_tex));
         swTexInitMove_malloced(&t, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, tex_data);
         require(t.pixels == tex_data);
         swTexDestroy(&t);
@@ -34,7 +34,7 @@ void test_texture() {
     {
         // Texture swTexGetColorFloat_RGBA
         SWtexture t_;
-        swTexInit(&t_, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, tex);
+        swTexInit(&t_, SW_RGB, SW_UNSIGNED_BYTE, 4, 4, test_texture_tex);
         require(t_.pixels != NULL);
         require(((SWubyte*)t_.pixels)[3] == 1);
 
